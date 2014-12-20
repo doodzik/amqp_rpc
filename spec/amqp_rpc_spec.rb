@@ -2,10 +2,14 @@ require 'spec_helper'
 
 describe AmqpRpc do
   it 'has a version number' do
-    expect(AmqpRpc::VERSION).not_to be nil
+    expect(described_class::VERSION).not_to be nil
   end
 
-  it 'does something useful' do
-    expect(false).to eq(true)
+  it 'has amqp rpc client class' do
+    expect(described_class.const_defined?(:Server)).to be true
+  end
+
+  it 'has amqp rpc server class' do
+    expect(described_class.const_defined?(:Client)).to be true
   end
 end
