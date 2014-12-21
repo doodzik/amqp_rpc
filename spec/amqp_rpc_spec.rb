@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'amqp_rpc'
 
 describe AmqpRpc do
   it 'has a version number' do
