@@ -26,4 +26,39 @@ describe AmqpRpc::Client do
     expect(Test1::Foo.instance_variable_get(:@config).endpoint)
       .to eql 'Test'
   end
+
+  it '.method_added' do
+    callee_value = instance_double('Caller', value: 'true')
+    callee_close = instance_double('Caller', close: callee_value)
+    callee = instance_double('Caller', call: callee_close)
+    allow(Test).to receive(:send).and_return(String)
+    allow(described_class::Caller).to receive(:new).and_return callee
+    allow(described_class::Converter).to receive(:call)
+      .with(:String, 'true').and_return('works')
+    Test.method_added('fdfa')
+    expect(Test.fdfa).to eql('works')
+  end
+
+  describe AmqpRpc::Client::Caller do
+    it '#call' do
+      instance = described_class.new
+      expect(instance.call).to eq(instance)
+    end
+
+    it '#close' do
+      instance = described_class.new
+      expect(instance.close).to eq(instance)
+    end
+
+    it '#value' do
+      instance = described_class.new
+      expect(instance.value).to eq(instance)
+    end
+  end
+
+  describe AmqpRpc::Client::Converter do
+  end
+
+  describe AmqpRpc::Client::Config do
+  end
 end
