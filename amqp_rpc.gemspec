@@ -20,6 +20,9 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(/^bin\//) { |f| File.basename(f) }
   spec.require_paths = ['lib']
 
+  spec.add_dependency 'msgpack'
+  spec.add_dependency 'bunny'
+
   spec.add_development_dependency 'bundler', '~> 1.7'
   spec.add_development_dependency 'rake', '~> 10.0'
   spec.add_development_dependency 'rspec'
@@ -30,7 +33,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rubocop-rspec'
   spec.add_development_dependency 'reek'
   spec.add_development_dependency 'yard'
-
   spec.add_development_dependency 'simplecov'
   spec.add_development_dependency 'byebug'
   spec.add_development_dependency 'did_you_mean'
