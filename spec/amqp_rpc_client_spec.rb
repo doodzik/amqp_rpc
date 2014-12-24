@@ -2,7 +2,7 @@ require 'spec_helper'
 require 'amqp_rpc/client'
 
 describe AmqpRpc::Client do
-  context 'when included' do
+  context 'when extended' do
     # test integration of the client
     class Test
       extend AmqpRpc::Client
@@ -31,34 +31,9 @@ describe AmqpRpc::Client do
     callee_value = instance_double('Caller', value: 'true')
     callee_close = instance_double('Caller', close: callee_value)
     callee = instance_double('Caller', call: callee_close)
-    allow(Test).to receive(:send).and_return(String)
     allow(described_class::Caller).to receive(:new).and_return callee
-    allow(described_class::Converter).to receive(:call)
-      .with(:String, 'true').and_return('works')
+    allow(MessagePack).to receive(:unpack).with('true').and_return('works')
     Test.method_added('fdfa')
     expect(Test.fdfa).to eql('works')
-  end
-
-  describe AmqpRpc::Client::Caller do
-    it '#call' do
-      instance = described_class.new
-      expect(instance.call).to eq(instance)
-    end
-
-    it '#close' do
-      instance = described_class.new
-      expect(instance.close).to eq(instance)
-    end
-
-    it '#value' do
-      instance = described_class.new
-      expect(instance.value).to eq(instance)
-    end
-  end
-
-  describe AmqpRpc::Client::Converter do
-  end
-
-  describe AmqpRpc::Client::Config do
   end
 end
