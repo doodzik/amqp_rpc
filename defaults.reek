@@ -1,0 +1,3 @@
+ControlParameter:
+  exclude:
+    - 'AmqpRpc::Client::Caller#set_response'

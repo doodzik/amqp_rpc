@@ -17,7 +17,7 @@ module AmqpRpc
 
     def method_added(name)
       define_singleton_method name do |*args, &_block|
-        value = Caller.new(@config, *args).call.close.value
+        value = Caller.new(@config, *args).call(name).close.response
         MessagePack.unpack(value)
       end
     end

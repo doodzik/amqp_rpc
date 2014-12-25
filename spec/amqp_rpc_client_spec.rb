@@ -28,7 +28,7 @@ describe AmqpRpc::Client do
   end
 
   it '.method_added' do
-    callee_value = instance_double('Caller', value: 'true')
+    callee_value = instance_double('Caller', response: 'true')
     callee_close = instance_double('Caller', close: callee_value)
     callee = instance_double('Caller', call: callee_close)
     allow(described_class::Caller).to receive(:new).and_return callee
