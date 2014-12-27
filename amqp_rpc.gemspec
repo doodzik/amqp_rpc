@@ -9,9 +9,8 @@ Gem::Specification.new do |spec|
   spec.authors       = ['doodzik']
   spec.email         = ['frederik.dudzik@gmail.com']
 
-  spec.summary       = 'TODO: a short summary, because Rubygems requires one.'
-  spec.description   = 'TODO: Write a longer description or delete this line.'
-  spec.homepage      = 'TODO: Put your gem\'s website or public repo URL here.'
+  spec.summary       = 'a dsl for receiving and sending rpc calls for RabbitMQ'
+  spec.homepage      = 'https://travis-ci.org/doodzik/amqp_rpc'
   spec.license       = 'MIT'
 
   spec.files         = `git ls-files -z`.split("\x0").reject do
