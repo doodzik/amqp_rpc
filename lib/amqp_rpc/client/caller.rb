@@ -1,5 +1,6 @@
 require 'bunny'
 require 'thread'
+require 'SecureRandom'
 
 module AmqpRpc
   module Client
