@@ -9,4 +9,4 @@ RSpec::Core::RakeTask.new(:spec) do |t|
 end
 Reek::Rake::Task.new(:reek)
 
-task default: [:spec, :rubocop, :reek]
+task default: [:spec, :rubocop] # reek
