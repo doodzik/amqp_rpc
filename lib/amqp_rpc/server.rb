@@ -1,4 +1,4 @@
-require 'amqp_rpc/client/config'
+require 'amqp_rpc/config'
 require 'amqp_rpc/server/caller'
 require 'amqp_rpc/data_handler'
 require 'msgpack'
