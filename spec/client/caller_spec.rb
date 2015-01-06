@@ -24,7 +24,7 @@ describe AmqpRpc::Client::Caller do
     callee.instance_variable_set(:@semaphore, mutex)
     callee.instance_variable_set(:@resource, resource)
 
-    expect(callee.call('data')).to eq(callee)
+    callee.call('data')
     expect(callee.instance_variable_get(:@call_id)).to eq('hi')
     expect(resource).to have_received(:wait).with(mutex)
   end
@@ -36,7 +36,7 @@ describe AmqpRpc::Client::Caller do
     expect(conn).to receive(:close)
     callee.instance_variable_set(:@ch, channel)
     callee.instance_variable_set(:@conn, conn)
-    expect(callee.close).to eq(callee)
+    callee.send :close
   end
 
   it '#call_server' do

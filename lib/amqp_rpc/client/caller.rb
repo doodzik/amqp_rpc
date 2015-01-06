@@ -24,16 +24,16 @@ module AmqpRpc
         @call_id = generate_uuid
         call_server(data_to_send)
         @semaphore.synchronize { @resource.wait(@semaphore) }
-        self
+        close
+        @response
       end
+
+      private
 
       def close
         @ch.close
         @conn.close
-        self
       end
-
-      private
 
       def call_server(data_to_send)
         @exchange.publish(data_to_send,

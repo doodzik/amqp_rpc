@@ -13,11 +13,6 @@ module AmqpRpc
         @x      = @ch.default_exchange
       end
 
-      def close
-        @ch.close
-        @conn.close
-      end
-
       def call(&block)
         start &block
       rescue Interrupt => _
@@ -25,6 +20,11 @@ module AmqpRpc
       end
 
       private
+
+      def close
+        @ch.close
+        @conn.close
+      end
 
       def start
         @q.subscribe(:block => true) do |delivery_info, properties, payload|

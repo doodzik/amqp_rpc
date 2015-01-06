@@ -29,9 +29,7 @@ describe AmqpRpc::Client do
   end
 
   it '.method_added' do
-    callee_value = instance_double('Caller', response: { r: 'works' }.to_msgpack)
-    callee_close = instance_double('Caller', close: callee_value)
-    callee = instance_double('Caller', call: callee_close)
+    callee = instance_double('Caller', call: { r: 'works' }.to_msgpack)
     allow(described_class::Caller).to receive(:new).and_return callee
     Test.method_added('fdfa')
     expect(Test.fdfa).to eql('works')
