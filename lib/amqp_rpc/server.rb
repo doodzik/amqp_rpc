@@ -17,16 +17,16 @@ module AmqpRpc
     end
 
     def call
-      Caller.new(config).call { |data| call_method(data) }
+      Caller.new(@config).call { |data| call_method(data) }
     end
 
     private
 
     def call_method(data)
       handler = DataHandler.new(data)
-      handler.return = send handler.func, handler.args
+      # r := return, f := function, a := arguments
+      handler.r = send handler.f, handler.a
       handler
     end
   end
 end
-

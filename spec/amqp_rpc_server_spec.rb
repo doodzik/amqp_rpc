@@ -27,14 +27,32 @@ describe AmqpRpc::Server do
       .to eql 'Test'
   end
 
-  it '.method_added' do
-    skip
-    # callee_value = instance_double('Caller', response: 'true')
-    # callee_close = instance_double('Caller', close: callee_value)
-    # callee = instance_double('Caller', call: callee_close)
-    # allow(described_class::Caller).to receive(:new).and_return callee
-    # allow(MessagePack).to receive(:unpack).with('true').and_return('works')
-    # Test.method_added('fdfa')
-    # expect(Test.fdfa).to eql('works')
+  it '.call' do
+    # implementation mock
+    class Test2
+      extend AmqpRpc::Server
+    end
+    callee = double
+    expect(Test2).to receive(:call_method).with('data')
+    expect(callee).to receive(:call).and_yield('data')
+    allow(described_class::Caller).to receive(:new).and_return(callee)
+    Test2.call
+  end
+
+  it '.call_method' do
+    # implementation mock
+    class Test3
+      extend AmqpRpc::Server
+
+      def self.example(a)
+        a
+      end
+    end
+    handler = instance_double 'DataHandler', f: 'example', a: 2
+    expect(handler).to receive(:r=).with(2)
+    expect(AmqpRpc::DataHandler).to receive(:new)
+      .with(data: 'data').and_return(handler)
+    expect(Test3.send :call_method, data: 'data')
+      .to eq(handler)
   end
 end
